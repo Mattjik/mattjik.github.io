@@ -2,9 +2,51 @@
 <html>
 <head>
 <title>My Game Hub</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #1a1a1a;
+  color: white;
+  text-align: center;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+.tile {
+  background: #333;
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+.tile:hover {
+  background: #555;
+}
+</style>
 </head>
 <body>
 <h1>My Game Hub</h1>
-<p>Coming soon</p>
+<div class="grid">
+<a class="tile" href="games/game1/">Game 1</a>
+<a class="tile" href="games/game2/">Game 2</a>
+<a class="tile" href="games/game3/">Game 3</a>
+<a class="tile" href="games/game4/">Game 4</a>
+<a class="tile" href="games/game5/">Game 5</a>
+<a class="tile" href="games/game6/">Game 6</a>
+<a class="tile" href="games/game7/">Game 7</a>
+<a class="tile" href="games/game8/">Game 8</a>
+<a class="tile" href="games/game9/">Game 9</a>
+<a class="tile" href="games/game10/">Game 10</a>
+<a class="tile" href="games/game11/">Game 11</a>
+<a class="tile" href="games/game12/">Game 12</a>
+<a class="tile" href="games/game13/">Game 13</a>
+<a class="tile" href="games/game14/">Game 14</a>
+<a class="tile" href="games/game15/">Game 15</a>
+<a class="tile" href="games/game16/">Game 16</a>
+</div>
 </body>
 </html>
