@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getaway Shootout</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #game-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+    }
+
+    #game {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game" tabindex="-1"></canvas>
+  </div>
+
+  <script>
+    const config = {
+      dataUrl: "Build/1c9c9a53750a69d6bbfecc1ee4dd29e9.data",
+      frameworkUrl: "Build/f5f926b8469fb93664d78809a76685ef.js",
+      codeUrl: "Build/60e4e96d1c148f8a9ea7bb182d0b6a3a.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "New Eich Games",
+      productName: "Getaway Shootout",
+      productVersion: "1.0"
+    };
+
+    const canvas = document.getElementById("game");
+
+    const script = document.createElement("script");
+    script.src = "Build/1214fbea69c5893898f0c094bddb36cf.js";
+
+    script.onload = function () {
+      createUnityInstance(canvas, config, function (progress) {
+        console.log(Math.round(progress * 100) + "%");
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
