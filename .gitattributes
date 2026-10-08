@@ -1,1 +1,6 @@
 * -text
+*.swf binary
+*.abc binary
+*.abcs binary
+*.jpg binary
+*.png binary
