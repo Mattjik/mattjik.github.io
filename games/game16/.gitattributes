@@ -1,0 +1,7 @@
+*.bundle binary
+*.data binary
+*.wasm binary
+*.png binary
+*.jpg binary
+*.js -text
+*.json -text
