@@ -1,39 +1,79 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>My Perfect Hotel - Poki</title>
-	<script>
-	window.config = {
-		loader: 'unity-2020',
-		debug: false,
-		maxRatio: 24 / 9,
-		minRatio: 9 / 24,
-
-		title: 'My Perfect Hotel',
-		thumbnail: 'https:\/\/img.poki-cdn.com\/f39e22538799cae88cf1a630492c2e7b.png',
-		numScreenshots:  4 ,
-
-		unityVersion: '2022.3.62f2',
-		unityWebglBuildUrl: '',
-
-		fileSize:  8 ,
-		cachedDecompressedFileSizes: {
-			'101a0553a2917fd4c62a7e2159d30814.data':  2054105 ,
-			'2809ee090e7f1bf0e1a32425590981e7.framework.js':  73124 ,
-			'9d94f3fbc22c5914756c67722e0cdaca.wasm':  6104744 ,
-			'ea153e321edf23b9a40b38d65ce41d01.loader.js':  6774 ,
-		},
-		"metadata": {"poki_template_version":1,"background_color":"#00C565","code_filename":"9d94f3fbc22c5914756c67722e0cdaca.wasm","company_name":"master","data_filename":"101a0553a2917fd4c62a7e2159d30814.data","decompression_fallback":"Disabled","development_player":"false","framework_filename":"2809ee090e7f1bf0e1a32425590981e7.framework.js","height":"1920","loader_filename":"ea153e321edf23b9a40b38d65ce41d01.loader.js","product_name":"My Hotel","product_version":"1.0.3","splash_screen_style":"Dark","unity_version":"2022.3.62f2","use_data_caching":"true","use_threads":"false","use_wasm":"true","use_webgl_1_0":"false","use_webgl_2_0":"true","width":"1080"}
-	};
-	</script>
-<!-- will be copied to the resulting head //-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+<title>My Perfect Hotel</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #00C565; }
+  #wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #unity-canvas { display: block; background: #00C565; outline: none; }
+  #loading {
+    position: fixed; inset: 0; display: flex; flex-direction: column; gap: 14px;
+    align-items: center; justify-content: center; color: #fff;
+    font: 600 18px system-ui, Arial, sans-serif;
+  }
+  #bar { width: min(320px, 70vw); height: 12px; border-radius: 6px; background: rgba(0,0,0,.25); overflow: hidden; }
+  #fill { width: 0; height: 100%; background: #fff; transition: width .2s; }
+  #error { display: none; max-width: 480px; padding: 0 20px; text-align: center; font-weight: 400; }
+</style>
+<script src="poki-stub.js"></script>
 </head>
 <body>
-	<script src="https://game-cdn.poki.com/loaders/v3/master-loader.js"></script>
-<!-- will be copied to the resulting body //-->
-<!-- will also be copied to the resulting body //-->
+<div id="wrap"><canvas id="unity-canvas" tabindex="-1"></canvas></div>
+<div id="loading">
+  <div>Loading My Perfect Hotel…</div>
+  <div id="bar"><div id="fill"></div></div>
+  <div id="error"></div>
+</div>
+<script>
+  var canvas = document.getElementById("unity-canvas");
+
+  // Game is designed for portrait (1080x1920); keep its shape within these limits.
+  var MAX_RATIO = 24 / 9, MIN_RATIO = 9 / 24;
+  function resize() {
+    var w = window.innerWidth, h = window.innerHeight, r = w / h;
+    if (r > MAX_RATIO) w = h * MAX_RATIO;
+    else if (r < MIN_RATIO) h = w / MIN_RATIO;
+    canvas.style.width = Math.round(w) + "px";
+    canvas.style.height = Math.round(h) + "px";
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  var build = "Build/";
+  var script = document.createElement("script");
+  script.src = build + "ea153e321edf23b9a40b38d65ce41d01.loader.js";
+  script.onload = function () {
+    PokiSDK.gameLoadingStart();
+    createUnityInstance(canvas, {
+      dataUrl: build + "101a0553a2917fd4c62a7e2159d30814.data",
+      frameworkUrl: build + "2809ee090e7f1bf0e1a32425590981e7.framework.js",
+      codeUrl: build + "9d94f3fbc22c5914756c67722e0cdaca.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "master",
+      productName: "My Hotel",
+      productVersion: "1.0.3",
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+    }, function (progress) {
+      document.getElementById("fill").style.width = Math.round(progress * 100) + "%";
+    }).then(function (instance) {
+      window.setUnityInstance(instance);
+      PokiSDK.gameLoadingFinished();
+      document.getElementById("loading").style.display = "none";
+      canvas.focus();
+    }).catch(function (err) {
+      var el = document.getElementById("error");
+      el.style.display = "block";
+      el.textContent = "The game couldn't start: " + err;
+    });
+  };
+  script.onerror = function () {
+    var el = document.getElementById("error");
+    el.style.display = "block";
+    el.textContent = "Couldn't load the game files.";
+  };
+  document.body.appendChild(script);
+</script>
 </body>
 </html>
